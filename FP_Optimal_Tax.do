@@ -51,8 +51,9 @@ global tax=14
 while abs($tax-$tax_1)>abs($tol) & `i'<$max_iter{
 	di "Iteração: `i'"
 	global tax=$tax_1
+	
 	run "taxpoint_mix_2.do"
-	global tax_1=$ext
+	global tax_1=$ext-(($ext/$tax_1)-1)
 	di "t=$tax,t+1=$tax_1"
 	local ++i
 	
