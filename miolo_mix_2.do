@@ -30,7 +30,7 @@ while max_diff>inner_tol {
 	local pk=1
 	local t=3
 	* salvando os dados para usar varias vezes no loop a seguir
-	qui save "Data/temp_miolo_loop.dta", replace
+	qui save "./Data/temp_miolo_loop.dta", replace
 	foreach xx in manha noite off {
 		use "Data/temp_miolo_loop.dta", clear
 		if `pk'==3 {
@@ -128,7 +128,7 @@ while max_diff>inner_tol {
 	*qui gen traf_tot_tudo=(traf_tot_1+ traf_tot_2+ traf_tot_3+ traf_tot_4+ traf_tot_5+ traf_tot_6)/1000000
 	*qui replace traf_tot_3=traf_tot_3/1000000 
 	*qui replace traf_tot_1=traf_tot_1/1000000 
-	***** aqui 4 È onibus, 6  È carro, e 12 È metro
+	***** aqui 4 √à onibus, 6  √à carro, e 12 √à metro
 
 	rename traf_tot_3 traf_tot_car
 	rename traf_tot_1 traf_tot_bus
@@ -152,15 +152,15 @@ while max_diff>inner_tol {
 * gerar var tempo de viagem por meio de transporte
 use "Data/tempo_viagem_dados.dta", clear
 drop traf_tot_all traf_tot_bus traf_tot_car l_traf_bus_sqr l_traf_car_sqr l_traf_tot_all ///
- l_traf_tot_bus l_traf_tot_car l_traf_tot_sqr traf_tot_car_cub traf_tot_car_sqr _merge
+ l_traf_tot_bus l_traf_tot_car l_traf_tot_sqr traf_tot_car_cub traf_tot_car_sqr 
 * adiciona o trafego  - TRAFEGO TOTAL (TUDO!!)
-merge 1:1 origem destino peak using traf_rotas_noite.dta
+merge 1:1 origem destino peak using "Data/traf_rotas_noite.dta"
 drop if _merge==2
 drop _merge
-merge 1:1 origem destino peak using traf_rotas_off.dta, update
+merge 1:1 origem destino peak using "Data/traf_rotas_off.dta", update
 drop if _merge==2
 drop _merge
-merge 1:1 origem destino peak using traf_rotas_manha.dta, update 
+merge 1:1 origem destino peak using "Data/traf_rotas_manha.dta", update 
 drop if _merge==2
 drop _merge
 
@@ -174,7 +174,7 @@ qui gen traf_tot_car_sqr=traf_tot_car^2
 cap drop tr_car* tr_bus* v* soma*
 *save tempo_viagem_dados.dta, replace
 
-		**** 4 - Tempo previsto mÈdio em cada rota por meio (carro, onibus, metro)
+		**** 4 - Tempo previsto m√àdio em cada rota por meio (carro, onibus, metro)
 	** CRL: De onde veio este "tempo_viagem_dados"?
 	
 	
@@ -220,7 +220,7 @@ cap drop tr_car* tr_bus* v* soma*
 
 
 	**** 5  - Checar se convergiu para um dado imposto
-	* ver se as escolhas/probabilidades mudaram de uma iteração (t-1) para outra (t)
+	* ver se as escolhas/probabilidades mudaram de uma itera√ß√£o (t-1) para outra (t)
 	 
 	* as escolhas em t
 	use "Data/dados_demanda.dta", clear
@@ -231,19 +231,23 @@ cap drop tr_car* tr_bus* v* soma*
 
 	*rename zona_o origem
 	*rename zona_d destino
-	qui merge m:1 origem destino dup peak using "Data/tempo_car_pred.dta", nogen
-	qui merge m:1 origem destino dup peak using "Data/tempo_bus_pred.dta", nogen 
+	merge m:1 origem destino dup peak using "Data/tempo_car_pred.dta", nogen
+	merge m:1 origem destino dup peak using "Data/tempo_bus_pred.dta", nogen 
 	*qui merge m:1 origem destino dup using "Data/tempo_metro_pred.dta", nogen
 	
-	qui replace timetime=tempo_car_pred if tempo_car_pred~=.
-	qui replace timetime=tempo_bus_pred if tempo_bus_pred~=.
+	replace timetime=tempo_car_pred if tempo_car_pred~=.
+	replace timetime=tempo_bus_pred if tempo_bus_pred~=.
 	*qui replace timetime=tempo_metro_pred if tempo_metro_pred~=.
 
 	drop timexrenda
 	qui gen timexrenda=timetime/incinc
 	*qui gen timexrenda=timetime*incinc
 	qui mixlpred problogit_new, nrep(50)
-
+/*	
+	if $permits_system==1 {
+		replace problogit_old=0 if permit==0 & dup==3 & dummy_auto==1
+	}
+*/
 	*qui predict problogit_new, pr
 	qui generate diff=problogit_old-problogit_new
 	qui sum diff

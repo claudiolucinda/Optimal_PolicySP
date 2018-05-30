@@ -10,19 +10,18 @@ clear all
 set more off, permanently
 set seed 361
 set matsize 800
-* Selecionar o endere√ßo de destino
-* Coloca o seu endere√ßo abaixo do meu e quando usar, comenta o meu e usa o seu
-* Os C√≥digos v√£o ficar no diret√≥rio "trunk"
-* Os dados est√£o na OD
-* Os resultados da manipula√ß√£o v√£o para o diret√≥rio Output
+* Selecionar o endereÁo de destino
+* Coloca o seu endereÁo abaixo do meu e quando usar, comenta o meu e usa o seu
+* Os CÛdigos v„o ficar no diretÛrio "trunk"
+* Os dados est„o na OD
+* Os resultados da manipulaÁ„o v„o para o diretÛrio Output
 * cd "C:\Users\claudiolucinda\Documents\banco-mundial\"
 *cd "C:\Users\CLAUDIOLUCINDA\Documents\Consultoria\Transport Demand\banco-mundial\"
-*cd "C:\Users\Leandro\Desktop\Projetos\Ped√°gio Urbano\banco-mundial\"
-* Diret√≥rio M√°quina virtual Departamento
+*cd "C:\Users\Leandro\Desktop\Projetos\Ped·gio Urbano\banco-mundial\"
+* DiretÛrio M·quina virtual Departamento
 
 *global track "/Users/Rodrigo/Dropbox/Lucinda-Moita/"
-*global track "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita"
-global track "C:\Users\claudiolucinda\Dropbox\Lucinda-Moita"
+global track "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita"
 *cd "C:\Users\claudiolucinda\Documents\banco-mundial\"
 *cd "/Users/Rodrigo/Dropbox/Lucinda-Moita/"
 cd "$track"
@@ -30,7 +29,7 @@ cd "$track"
 
 
 ****************************************************
-* Checando se Possui um Diret√≥rio Output
+* Checando se Possui um DiretÛrio Output
 ****************************************************
 
 
@@ -39,9 +38,9 @@ use "$track/Pesquisa OD/Bases dta/banco_de_dados_od_2007_corrigido.dta", clear
 *use "$track\Pesquisa OD\Bases dta\banco_de_dados_od_2007_corrigido.dta", clear
 
 **************************************************
-* Estat√≠sticas Descritivas e Gr√°ficos
+* EstatÌsticas Descritivas e Gr·ficos
 **************************************************
-*Vari√°veis de modal
+*Vari·veis de modal
 quietly{
 	sort modoprin
 	by modoprin: gen modoprinN=_N
@@ -66,7 +65,7 @@ label values modoprin lmodoprin
 label define lmodo2 1"Bus(SP)" 2"Bus(Intermunicipal)" 3"Bus(Metrop)" 4"Bus(Private)" 5"Scholar" 6"Driving" 7"Shared Ride" 8"Cab" 9"MicroBus(SP)" 10"Microbus(Intermunicipal)" 11"Microbus(Metrop)" 12"Subway" 13"Train" 14"Motorcycle" 15"Bike" 16"Walking" 17"Other" 
 label values modo2 lmodo2
 
-*Criando vari√°veis de zona
+*Criando vari·veis de zona
 *do "branch04\trunk\Zoning.do"
 do "branch04/paper_non_optimal_policies_v2015/Zoning.do"
 *do "branch04\paper_non_optimal_policies_v2015\Zoning.do"
@@ -112,7 +111,7 @@ foreach c of local colist{
 			matrix velocidade[`i' , 3] = velocidade[`i' , 2]*0.7071361
 		}
 }
-matrix rownames velocidade = Demais_hor√°rios Pico_manh√£ Pico_almo√ßo Pico_noite
+matrix rownames velocidade = Demais_hor·rios Pico_manh„ Pico_almoÁo Pico_noite
 matrix colnames velocidade = vmedia_total vmedia_carros_ajustada
 matrix list velocidade, format(%9.3f) ti("Average speed during different periods of the day")
 gen vel2 = 0
@@ -122,22 +121,22 @@ replace vel2 = 8.784 if pico == 2
 replace vel2 = 26.237 if pico == 0 
 
 
-* CRL: Porque voc√™ tem estes n√∫meros aqui? N√£o entendi, n√£o era simplesmente dist/travel_time ???
-*LGM: Como a dist√¢ncia que temos aqui √© em linha reta, a medida de velocidade m√©dia da nossa amostra n√£o √© exatamente a verdadeira velocidade m√©dia. 
-*Por isso, eu peguei a velocidade m√©dia da pesquisa do link abaixo (para pico de manh√£ e de tarde) e utilizei elas como base para 'corrigir' a velocidade 
-*m√©dia da nossa amostra nos demais per√≠odos. 
+* CRL: Porque vocÍ tem estes n˙meros aqui? N„o entendi, n„o era simplesmente dist/travel_time ???
+*LGM: Como a dist‚ncia que temos aqui È em linha reta, a medida de velocidade mÈdia da nossa amostra n„o È exatamente a verdadeira velocidade mÈdia. 
+*Por isso, eu peguei a velocidade mÈdia da pesquisa do link abaixo (para pico de manh„ e de tarde) e utilizei elas como base para 'corrigir' a velocidade 
+*mÈdia da nossa amostra nos demais perÌodos. 
 
 
 *http://www.nossasaopaulo.org.br/observatorio/regioes.php?regiao=33&tema=13&indicador=119
-*pico manh√£ = 17 km/h
+*pico manh„ = 17 km/h
 *pico tarde = 14.2 km/h
 
-*Custos Impl√≠citos
+*Custos ImplÌcitos
 gen custo_im = 0
 *OBS: RETIREI CUSTO IMPLICITO
 *replace custo_im = (vl_ren_i/(30*24))*travel_time/60
 
-*Custos expl√≠citos
+*Custos explÌcitos
 gen custo = 0
 gen c2 = 0
 gen c3 = 0
@@ -173,7 +172,7 @@ replace c3 = vel2*0.14*(travel_time/60) if modo3 == 4
 replace c4 = vel2*0.14*(travel_time/60) if modo4 == 4
 
 *Onibus intermunicipal/metropolitano
-*do "C:\Users\Leandro\Desktop\Projetos\Ped√°gio Urbano\banco-mundial\trunk\Businter"
+*do "C:\Users\Leandro\Desktop\Projetos\Ped·gio Urbano\banco-mundial\trunk\Businter"
 *do "branch04\trunk\Businter.do"
 do "branch04/paper_non_optimal_policies_v2015/Businter.do"
 *do "branch04\paper_non_optimal_policies_v2015\Businter.do"
@@ -185,13 +184,13 @@ gen custo_ex = custo + c2 + c3 + c5
 gen custo_tot = custo_ex	
 
 
-* C√≥digo s√≥ para fazer as tabelas se necess√°rio
+* CÛdigo sÛ para fazer as tabelas se necess·rio
 local descrs=0
 
 if `descrs'==1 {
 	do "branch04\paper_non_optimal_policies_v2015\desc_stat.do"
 }
-*todos os resultados tem que ser salvos no diret√≥rio Output - o "trunk" fica s√≥ pros c√≥digos
+*todos os resultados tem que ser salvos no diretÛrio Output - o "trunk" fica sÛ pros cÛdigos
 
 
 ***************************************************
@@ -199,11 +198,11 @@ if `descrs'==1 {
 ***************************************************
 
 * Aqui precisamos trabalhar inicialmente com o mlogit e o nlogit
-* Acho que as op√ß√µes que o agente enfrenta s√£o:
+* Acho que as opÁıes que o agente enfrenta s„o:
 * - Os modais sozinhos
-* - algumas (3 ou 4) op√ß√µes combinadas envolvendo os modais sozinhos
-* - Outros (que s√£o a Outside Option)
-* - Acho que n√£o devemos colocar "a p√©" como op√ß√£o, pelo motivo Eike Batista que disse antes.
+* - algumas (3 ou 4) opÁıes combinadas envolvendo os modais sozinhos
+* - Outros (que s„o a Outside Option)
+* - Acho que n„o devemos colocar "a pÈ" como opÁ„o, pelo motivo Eike Batista que disse antes.
 * CRL - Acho a mesma coisa
 
 
@@ -223,29 +222,10 @@ foreach var of varlist c4 c3 c2 custo vel2  vel1 time_mm time_h stempo_dec ctemp
 	drop `var'
 	}
 * Mesma coisa
-foreach var of varlist trab1_re pe_bici ocup2 ocup1 munitra2 munitra1 muni_dom muni_o muni_d muni_t3 muni_t2 muni_t1 muniesc modo4 modo3 modo2 modo1 modoprin min_saida min_cheg f_dom f_pess f_fam hr_min_chegada tp_esbici co_o_y co_d_y co_t3_y co_t2_y co_t1_y co_tr2_y co_tr1_y co_esc_y co_o_x co_d_x co_t3_x co_t2_x co_t1_x co_tr2_x co_tr1_x co_esc_x {
+foreach var of varlist trab1_re pe_bici ocup2 ocup1 munitra2 munitra1 muni_dom muni_o muni_d muni_t3 muni_t2 muni_t1 muniesc modo4 modo3 modo2 modo1 modoprin min_saida min_cheg f_dom f_pess f_fam hr_min_saida hr_min_chegada tp_esbici co_o_y co_d_y co_t3_y co_t2_y co_t1_y co_tr2_y co_tr1_y co_esc_y co_o_x co_d_x co_t3_x co_t2_x co_t1_x co_tr2_x co_tr1_x co_esc_x {
 	drop `var'
 	}
 
-* Dummy "carro fora de casa"
-cap drop dum_saida
-cap drop dum_chegada
-
-gen dum_saida=0
-gen dum_chegada=0
-
-bysort id_pess hr_min_saida: replace dum_saida=1 if modoprin==6 & motivo_o==8
-
-bysort id_pess hr_min_saida: replace dum_chegada=1 if modoprin==6 & motivo_d==8
-
-
-cap drop dumSD
-*gen dum1=0
-
-bysort id_pess: gen dumSD=dum_saida[_n-1]
-bysort id_pess: replace dumSD=0 if dumSD==.
-bysort id_pess: replace dumSD=1 if dumSD[_n-1]==1 & dum_chegada[_n-1]==0
-	
 *gerando modo escolhido
 *gen modo_esc=0
 *forvalues i=1/$n_esc {
@@ -307,7 +287,7 @@ replace corredor10=1 if corr_o==1
 do "branch04/paper_non_optimal_policies_v2015/cf.do"
 *do "branch04\paper_non_optimal_policies_v2015\cf.do"
 
-* Eliminando as alternativa driving para quem n√£o tem carro
+* Eliminando as alternativa driving para quem n„o tem carro
 drop if dup==3 & modo_dummy==0 & dummy_auto==0
 
 *ajustando renda para o asclogit; colocando '0' no lugar de '.'
@@ -391,7 +371,7 @@ replace pico1=1 if pico!=0
 * Escolhas Originais
 *use "/Users/Rodrigo/Dropbox/Lucinda-Moita/branch04/dados_demanda_2014_10_01.dta", clear
 
-**** USAR ESSA EQUA‚ÄöAO PARA AJUSTAR A SIMULACAO DE POLITICA ***
+**** USAR ESSA EQUAÇAO PARA AJUSTAR A SIMULACAO DE POLITICA ***
 xi: asclogit modo_dummy costcost timetime costxrenda timexrenda [pw=fe_via] if trab_od, alt(dup) case(id) base(6) nocons casevars(dummy_ce fem corredor10 estacao10 incinc pico) iter(20) 
 est store mod01, title("Work")
 
@@ -458,7 +438,7 @@ eqlabels(Alt.Vars. Bus Rail Driving Motorcycle Taxi,span prefix(\hline\multicolu
 tab dup, gen(d1)
 
 
-foreach var of varlist dummy_ce fem corredor10 estacao10 incinc pico1 dumSD {
+foreach var of varlist dummy_ce fem corredor10 estacao10 incinc pico1 {
 		local j=$n_esc-1
 		forvalues i=1/`j' {
 			qui gen `var'_`i'=d1`i'*`var'
@@ -488,126 +468,81 @@ drop  ctempo_h ctempo_mm stempo_h stempo_mm  tipovg tipo_dom tipo_esc duracao an
  h_cheg h_saida idade cd_ativi co_ren_i motivo_d motivo_o cd_renfa nao_dcl_it cd_entre ano_auto1 ano_auto2 ano_auto3
 
 timer on 1 
-mixlogit modo_dummy dumSD_* dummy_ce_* fem_* corredor10_* estacao10_* incinc_* pico1_* costxrenda timexrenda [pw=fe_via] if trab_od, group(id) rand(costcost timetime)
+mixlogit modo_dummy dummy_ce_* fem_* corredor10_* estacao10_* incinc_* pico1_* costxrenda timexrenda [pw=fe_via] if trab_od, group(id) rand(costcost timetime)
+est store mod05, title("Work")
+est save mod05
+
 timer off 1
+global modmod "mod05"
+*do "branch04\trunk\PE_Mixlogit.do"
+do "branch04/paper_non_optimal_policies_v2015/PE_Mixlogit.do"
+rename esc_pred0 esc_pred5
+rename logsum0 logsum5
+mat rename elasts elasts05
+mat rownames elasts05="Bus" "Rail" "Driving" "Motorcycle" "Taxi" "Other"
+mat colnames elasts05="Bus" "Rail" "Driving" "Motorcycle" "Taxi" "Other"
+*outtable using "branch04\trunk\Output\elasts05", mat(elasts05) replace nobox center asis caption("Elasts MixLogit - Educ Trips") format(%6.4f) clabel(elast05)
+outtable using "branch04/Output/elasts05", mat(elasts05) replace nobox center asis caption("Elasts MixLogit - Educ Trips") format(%6.4f) clabel(elast05)
 
-estimates store mod01ml, title("Mod. B√°sico")
+* salvo a base mais os valores previstos para usar na simulacao
+save "/Users/Rodrigo/Dropbox/Lucinda-Moita/Pesquisa OD/Bases dta/base_ajustada_valores_previstos", replace
 
-mark samp_setter if e(sample)
-
-estimates save ".\pedagio_otimo\Codigos_CRL\Data\modelo_CRL.ster", replace
-
-global vars=e(indepvars)
-mixlbeta $vars if e(sample), saving(".\pedagio_otimo\Codigos_CRL\Data\Indiv_coeffs.dta") replace
-
-preserve
-
-use ".\pedagio_otimo\Codigos_CRL\Data\Indiv_coeffs.dta", clear
-
-foreach var of global vars {
-	rename `var' beta_`var'
-}
-
-sort id 
-save ".\pedagio_otimo\Codigos_CRL\Data\Indiv_coeffs.dta", replace
-
-restore
-*estimates esample: if samp_setter==1
-*use "Data/dados_start.dta", clear
-**** 1 - valor inicial do imposto I0=5 *
-qui gen costcost_0=costcost
-*qui gen costxrenda_0=costxrenda
-qui generate timetime_1=timetime
-
-global tax=0
-
-qui replace costcost=costcost_0+$tax if dup==3 & dummy_ce==1 & samp_setter==1
-* CRL: Checar a forma aqui
-qui replace costxrenda=(costcost_0+$tax)/incinc if dup==3 & dummy_ce==1 & samp_setter==1
+*mixlogit modo_dummy dummy_ce_* fem_* corredor10_* estacao10_* incinc_* pico_* costxrenda timexrenda [pw=fe_via] if educ_od, group(id) rand(costcost timetime)
+*est store mod06, title("Educ.")
+*timer list
+*global modmod "mod06"
+*do "branch04\trunk\PE_Mixlogit.do"
+*do "branch04/PE_Mixlogit.do"
+*rename esc_pred0 esc_pred6
+*rename logsum0 logsum6
+*mat rename elasts elasts06
+*mat rownames elasts06="Bus" "Rail" "Driving" "Motorcycle" "Taxi" "Other"
+*mat colnames elasts06="Bus" "Rail" "Driving" "Motorcycle" "Taxi" "Other"
 
 
+*outtable using "branch04\trunk\Output\elasts06", mat(elasts06) replace nobox center asis caption("Elasts MixLogit - Educ Trips") format(%6.4f) clabel(elast06)
+*outtable using "branch04/Output/elasts06", mat(elasts06) replace nobox center asis caption("Elasts MixLogit - Educ Trips") format(%6.4f) clabel(elast06)
 
-estimates use ".\pedagio_otimo\Codigos_CRL\Data\modelo_CRL.ster"
-estimates esample: if samp_setter==1
-*estimates restore mod01
-* prevendo as probabilidades
-cap drop problogit_old
-qui mixlpred problogit_old, nrep(50)
-*qui predict problogit_old, pr
-qui drop if incinc==.
-qui drop if id==.
-replace fe_via=round(fe_via)
-save ".\pedagio_otimo\Codigos_CRL\Data\dados_demanda.dta", replace
-set trace on
-do ".\pedagio_otimo\Codigos_CRL\Optimal Nonlinear\miolo_mix_2.do"
-set trace off
-estimates use ".\pedagio_otimo\Codigos_CRL\Data\modelo_CRL.ster"
-estimates esample: if samp_setter==1
+*mlabels(, titles span prefix(\multicolumn{@span}{c}{) suffix(})) ///
+
+qui estout mod05  using "branch04/Output/mixlogit.tex", cells(b(fmt(%6.4f) star) t(par fmt(%6.4f)) ) /// 
+stats(N chi2 ll, labels(`"Observations"' `"LR chi2"' `"Log-Lik."')) ///
+title(Model Results \label{mixlogtab}) varlabels(_cons Constant) ///
+prehead("\begin{table}[htbp]\caption{@title}" "\begin{center} \tiny" "\begin{tabular}{l*{@M}{rr}}" "\hline \hline") posthead("\hline") label collabels(,none) ///
+prefoot("\hline") postfoot("\hline \hline" "\multicolumn{@span}{p{4cm}}{\small\textit{Source:} Authors' Calculations. @starlegend}" "\end{tabular}" "\end{center}" "\end{table}") style(tex) ///
+stardetach order(*_1 *_2 *_3 *_4 *_5 timetime costcost SD:costcost) eqlabels(Fixed Random,span prefix(\hline\multicolumn{@span}{c}{) suffix(})) replace
 
 
-keep if e(sample) 
 
-merge m:1 id using ".\pedagio_otimo\Codigos_CRL\Data\Indiv_coeffs.dta", nogen
-
-gen xi=0
-foreach var of global vars {
-	replace xi=xi+beta_`var'*`var'
-}
-
-
-gen vot=(beta_timetime)/(beta_costcost)
-
-gen ci=(xi/beta_costcost)+costcost_0+vot*timetime
-gen votdt=vot*dtdtraff
+*qui estout mod05 mod06 using "branch04/Output/mixlogit.tex", cells(b(fmt(%6.4f) star) t(par fmt(%6.4f)) ) /// 
+*stats(N chi2 ll, labels(`"Observations"' `"LR chi2"' `"Log-Lik."')) ///
+*title(Mixed Logit Results \label{mixlogtab}) varlabels(_cons Constant) mlabels(, titles span prefix(\multicolumn{@span}{c}{) suffix(})) ///
+*prehead("\begin{table}[htbp]\caption{@title}" "\tiny" "\begin{center} " "\begin{tabular}{l*{@M}{rr}}" "\hline \hline") posthead("\hline") label collabels(,none) ///
+*prefoot("\hline") postfoot("\hline \hline" "\multicolumn{@span}{p{4cm}}{\small\textit{Source:} Authors' Calculations. @starlegend}" "\end{tabular}" "\end{center}" "\end{table}") style(tex) ///
+*stardetach order(*_1 *_2 *_3 *_4 *_5 timetime costcost SD:costcost) eqlabels(Fixed Random,span prefix(\hline\multicolumn{@span}{c}{) suffix(})) replace
 
 
-qui replace costcost=costcost_0+votdt if dup==3 & dummy_ce==1 & samp_setter==1
-* CRL: Checar a forma aqui
-qui replace costxrenda=(costcost_0+votdt)/incinc if dup==3 & dummy_ce==1 & samp_setter==1
-
-estimates use ".\pedagio_otimo\Codigos_CRL\Data\modelo_CRL.ster"
-estimates esample: if samp_setter==1
-*estimates restore mod01
-* prevendo as probabilidades
-cap drop problogit_old
-qui mixlpred problogit_old, nrep(50)
-*qui predict problogit_old, pr
-qui drop if incinc==.
-qui drop if id==.
-replace fe_via=round(fe_via)
-save ".\pedagio_otimo\Codigos_CRL\Data\dados_demanda.dta", replace
-cd "C:\Users\claudiolucinda\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\"
-
-do ".\Code_Analysis\Optimal_PolicySP\miolo_mix_2.do"
-estimates use ".\Data\modelo_CRL.ster"
-estimates esample: if samp_setter==1
+***********************************************************
+* Criando o cÛdigo para as simulaÁıes
+***********************************************************
+*do branch04/simulation_mixlogit_work_2.do
 
 
-keep if e(sample) 
+
+*do branch04\trunk\contrafacts.do
+*do branch04/contrafacts.do
+
+* SimulaÁ„o 01 - ped·gio urbano vs expans„o do rodÌzio - sem efeitos sobre tempo de viagem
+
+*do branch04\trunk\Simulation01.do
+*do branch04/Simulation01.do
+
+*do branch04\trunk\Welf_effects2.do
+*do branch04/Welf_effects2.do
+
+*do branch04\trunk\Simulation02.do
+*do branch04/Simulation02.do
 
 
-gen xi_fin=0
-foreach var of global vars {
-	replace xi_fin=xi_fin+beta_`var'*`var'
-}
 
 
-gen vot_fin=(beta_timetime)/(beta_costcost)
-
-gen ci_fin=(xi_fin/beta_costcost)+costcost_0+vot_fin*timetime
-gen votdt_fin=vot*dtdtraff
-
-sort origem destino
-merge m:1 origem destino using ".\pedagio_otimo\Codigos_CRL\Data\temp_rotas_3.dta", nogen
-
-
-* Falta aqui
-* a) Achar a equa√ß√£o do tempo e pegar o coeficiente do tr√°fego
-* b) Achar o tr√°fego.
-
-
-gen vot_time=vot*timetime
-bysort origem destino: egen vot_tot2=sum(vot_time)
-
-gen NL_tax=(vot_tot2-vot_time)*dtdtraff
-gen NL_tax_trip=NL_tax*timetime
