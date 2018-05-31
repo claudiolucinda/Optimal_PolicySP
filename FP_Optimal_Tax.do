@@ -9,7 +9,7 @@ clear
 * QUEM E VOCE???
 * lucinda declara lucinda=1 e moita declara lucinda=0
 * todos os demais enderecos se ajustam automaticamente (I wish...)
-local lucinda=0
+local lucinda=1
 
 if `lucinda'==1 {
    cd "C:\Users\claudiolucinda\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\"

@@ -13,6 +13,8 @@ qui gen costcost_0=costcost
 qui gen costxrenda_0=costxrenda
 qui generate timetime_1=timetime
 
+gen dumSD_old=dumSD
+
 global etq=0
 qui replace costcost=costcost_0+$tax if dup==3 & dummy_ce==1
 if $grp_rebate == 0 {
@@ -52,12 +54,8 @@ cap drop pasclogit_0
 
 run "$track2/logsum_mix_4.do"
 
-bysort id: egen double probmax=max(problogit_old)
+run "$track2/miolo_SD.do"
 
-
-* 1 para o modo escolhido, 0 nos demais
-qui gen m_choice=0
-qui replace m_choice=1 if probmax==problogit_old
 qui gen esc_pred=m_choice*dup
 
 * merge as regioes que o individuo cruza
@@ -116,5 +114,6 @@ replace lsum_$etq = lsum_$etq + $lsum_rebate
 rename time_$etq timesum_$etq
 sort id_pess id
 save "Data/lsum_$etq.dta", replace
+
 
 clear
