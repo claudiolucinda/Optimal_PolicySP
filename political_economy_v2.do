@@ -9,7 +9,7 @@ macro drop _all
 * QUEM E VOCE???
 * lucinda declara lucinda=1 e moita declara lucinda=0
 * todos os demais enderecos se ajustam automaticamente (I wish...)
-local lucinda=1
+local lucinda=0
 
 if `lucinda'==1 {
    cd "C:\Users\claudiolucinda\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\"
@@ -22,16 +22,16 @@ if `lucinda'==1 {
    
 }
 else {
-	*cd "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/"
-	cd "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\"
-	*global track "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/Data/"
-	global track "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\Data\"
-	*global track1 "/Users/Rodrigo/Dropbox/Lucinda-Moita/Pesquisa OD/Bases dta/"
-	global track1 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\Pesquisa OD\Bases dta"
-	global track2 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\Code_Analysis\Optimal_PolicySP\"
-	*global track2 "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/Code_Analysis/Optimal_PolicySP"
-	*global track3 "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/paper_apresentacoes/output"
-	global track3 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\paper_apresentacoes\output"
+	cd "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/"
+	*cd "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\"
+	global track "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/Data/"
+	*global track "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\Data\"
+	global track1 "/Users/Rodrigo/Dropbox/Lucinda-Moita/Pesquisa OD/Bases dta/"
+	*global track1 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\Pesquisa OD\Bases dta"
+	*global track2 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\Codigos_CRL\Code_Analysis\Optimal_PolicySP\"
+	global track2 "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/Codigos_CRL/Code_Analysis/Optimal_PolicySP"
+	global track3 "/Users/Rodrigo/Dropbox/Lucinda-Moita/pedagio_otimo/paper_apresentacoes/output"
+	*global track3 "C:\Users\rodrigomsm\Dropbox\Lucinda-Moita\pedagio_otimo\paper_apresentacoes\output"
 	}
 
 capture confirm file "Data/dados_start00.dta" 
@@ -97,7 +97,7 @@ global ncar=chc[1,3]
 global rebate=0
 global etq=0
 global grp_rebate=0
-global tax=7
+global tax=7.64
 global revenue=$ncar*$tax
 
 bysort id_pess: gen idn=_n
@@ -134,14 +134,14 @@ global nvia_bus=chc[1,1]
 * o imposto sobre o carro
 scalar diff=1
 scalar inner_tol=0.05
-global tax=7
+global tax=7.64
 local flagrev=1
 global etq rev_bus
 
 
 while diff>inner_tol {
 	if `flagrev'==1 {
-		global rebate=2
+		global rebate=2.55
 		}
 	local flagrev=`flagrev'+1
 	display `flagrev'

@@ -4,6 +4,9 @@
 * 2018
 **************************************************************
 
+gen dumSD_back=dumSD
+drop dumSD 
+cap drop dumSD_*
 scalar max_diff_2=1
 scalar inner_tol_2=1e-4
 gen problogit_old2=problogit_old
@@ -32,17 +35,24 @@ while max_diff_2>inner_tol_2 {
 	gen dum_saida=0
 	gen dum_chegada=0
 
-	bysort id_pess hr_min_saida: replace dum_saida=1 if marcador==6 & _Imotivo_o_8==1
+	bysort id_pess hr_min_saida: replace dum_saida=1 if marcador==3 & _Imotivo_o_8==1
 
-	bysort id_pess hr_min_saida: replace dum_chegada=1 if marcador==6 & _Imotivo_d_8==1
+	bysort id_pess hr_min_saida: replace dum_chegada=1 if marcador==3 & _Imotivo_d_8==1
 
 
-	cap drop dumSD
 	*gen dum1=0
 
 	bysort id_pess: gen dumSD=dum_saida[_n-1]
 	bysort id_pess: replace dumSD=0 if dumSD==.
 	bysort id_pess: replace dumSD=1 if dumSD[_n-1]==1 & dum_chegada[_n-1]==0
+	
+	foreach var of varlist dumSD {
+		local j=$n_esc-1
+		forvalues i=1/`j' {
+			qui gen `var'_`i'=d1`i'*`var'
+		}
+	}
+	su dumSD*
 	
 	estimates use "Data/modelo.ster"
 	*estimates restore mod01
@@ -53,11 +63,23 @@ while max_diff_2>inner_tol_2 {
 	qui sum diff_2
 	scalar max_diff_2=r(max)
 	qui replace problogit_old2=problogit_new2
-	drop problogit_new2 diff_2 marcador
-	
+	drop problogit_new2 diff_2 marcador dumSD probmax2
+	cap drop dumSD_*
 
 
 
 }
+
+drop problogit_old
+gen problogit_old=problogit_old2
+
+
+gen dumSD=dumSD_back
+	foreach var of varlist dumSD {
+		local j=$n_esc-1
+		forvalues i=1/`j' {
+			qui gen `var'_`i'=d1`i'*`var'
+		}
+	}
 
 run "$track2/Pred_Choices.do"

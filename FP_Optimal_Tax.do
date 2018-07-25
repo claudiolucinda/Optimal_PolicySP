@@ -57,6 +57,7 @@ global max_iter=100
 global tol=1e-4
 local i=1
 
+global lsum_rebate=0
 global grp_rebate=0
 global rebate=0
 *set trace on

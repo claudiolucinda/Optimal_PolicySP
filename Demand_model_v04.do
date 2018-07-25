@@ -241,7 +241,7 @@ foreach var of varlist trab1_re pe_bici ocup2 ocup1 munitra2 munitra1 muni_dom m
 	
 * Dummy "carro fora de casa"
 cap drop dum_saida
-cap drop dum_chegada
+cap drop dum_chegada*
 
 gen dum_saida=0
 gen dum_chegada=0

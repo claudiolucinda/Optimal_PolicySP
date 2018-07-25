@@ -13,7 +13,7 @@ while max_diff>inner_tol {
 
 	* definindo qual o meio escolhido pela simulacao
 	*sort id
-	run "$track2/miolo_SD.do"
+	do "$track2/miolo_SD.do"
 	qui gen marcador=m_choice*dup
 	
 	

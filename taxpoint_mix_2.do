@@ -47,14 +47,14 @@ if $permits_system==1 {
 */
 save "Data/dados_demanda.dta", replace
 
-run "$track2/miolo_mix_2.do"
+do "$track2/miolo_mix_2.do"
 
 
 cap drop pasclogit_0
 
 run "$track2/logsum_mix_4.do"
 
-run "$track2/miolo_SD.do"
+do "$track2/miolo_SD.do"
 
 qui gen esc_pred=m_choice*dup
 
